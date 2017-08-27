@@ -1,0 +1,53 @@
+#!/bin/sh
+
+JOURNAL=~/journal.txt
+EXPORT=/tmp/jn.md
+MARKDOWN_VIEWER=firefox
+
+addtext() {
+  # Add a trailing newline to separate entries
+  echo "$1\n" >> journal.txt
+}
+
+# This is the One True Date Format
+date="$(date +"%F %-l:%M%P")\n"
+
+if [ "$1" = "-e" ]; then
+
+  # Edit journal in your favourite editor
+  $EDITOR + $JOURNAL
+
+elif [ "$1" = "-v" ]; then
+
+  # Add first heading
+  echo "# Journal (Markdown Export at $EXPORT)" > $EXPORT
+  # Make dates headings
+  sjournal=$(sed $JOURNAL -e "s/^\([[:digit:]]\{4\}-\)/## \1/g" >> $EXPORT)
+  # Make all single lines separate
+  # sed -i -e "s/\(\w\)$/\1  /g" $EXPORT
+  # Make all jn entries in <pre>
+  sed -i -e "s/^\([^#]\)/    \1/g" $EXPORT
+  # Open it in FF (or whatever)
+  $MARKDOWN_VIEWER $EXPORT
+
+elif [ "$1" = "" ]; then
+
+  echo "$date" > /tmp/jn
+  # The user edits the jn entry in their editor
+  # These are vim-only commands to start at the end, in insert mode
+  $EDITOR -c 'startinsert' + /tmp/jn
+  new="$(cat /tmp/jn)\n"
+
+  if [ "$new" = "$date" ]; then
+    echo "File unchanged, not adding to journal"
+  else
+    echo "Adding to journal."
+    addtext $(cat /tmp/jn)
+  fi
+
+else
+
+  # You can specify exactly what to add to jn in a one-liner by just adding it
+  addtext "$date$*"
+
+fi
