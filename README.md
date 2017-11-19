@@ -11,9 +11,11 @@ Usage
 
     $ jn Went to the post office
 
+<!-- I can't believe it, but this is necessary to split these up -->
 
     $ jn -j changelog.txt Removed libc6
 
+<!-- I can't believe it, but this is necessary to split these up -->
 
     $ jn
 
@@ -33,6 +35,7 @@ Usage
     I was sad
     ...
 
+<!-- I can't believe it, but this is necessary to split these up -->
 
     $ jn -v
 
