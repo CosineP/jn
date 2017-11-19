@@ -9,15 +9,17 @@ Clone it, then add it to your path or symlink it. It requires only a bourne-comp
 Usage
 -----
 
-`$ jn Went to the post office`
+    $ jn Went to the post office
 
-`$ jn -j changelog.txt Removed libc6`
 
-`$ jn`
+    $ jn -j changelog.txt Removed libc6
+
+
+    $ jn
 
 > Brings up your $EDITOR with a datestamp. Saving and quitting adds to journal.
 
-`$ jn -e`
+    $ jn -e
 
 > Brings up the whole journal in your $EDITOR.
 
@@ -31,7 +33,8 @@ Usage
     I was sad
     ...
 
-`$ jn -v`
+
+    $ jn -v
 
 > Exports to HTML and opens it in firefox (configurable)
 
