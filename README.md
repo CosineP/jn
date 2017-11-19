@@ -9,26 +9,29 @@ Clone it, then add it to your path or symlink it. It requires only a bourne-comp
 Usage
 -----
 
-    $ jn Went to the post office
+`$ jn Went to the post office`
 
-    $ jn -j changelog.txt Removed libc6
+`$ jn -j changelog.txt Removed libc6`
 
-    $ jn
+`$ jn`
 
 > Brings up your $EDITOR with a datestamp. Saving and quitting adds to journal.
 
-    $ jn -e
+`$ jn -e`
 
 > Brings up the whole journal in your $EDITOR.
 
     2015-06-25
     I did stuff
-    
+
     2017-08-12
     I did more stuff
-    
+
     2017-09-20
     I was sad
     ...
 
+`$ jn -v`
+
+> Exports to HTML and opens it in firefox (configurable)
 
