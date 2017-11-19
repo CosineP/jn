@@ -1,16 +1,28 @@
 #!/bin/sh
 
+# Add things to a journal in the comfort of your shell and/or favorite editor
+# License GPLv3
+
 JOURNAL=~/journal.txt
 EXPORT=/tmp/jn.md
 MARKDOWN_VIEWER=firefox
 
 addtext() {
   # Add a trailing newline to separate entries
-  echo "$1\n" >> journal.txt
+  echo "$1\n" >> $JOURNAL
 }
 
 # This is the One True Date Format
 date="$(date +"%F %-l:%M%P")\n"
+
+if [ "$1" = "-j" ]; then
+
+  # Specify a journal file
+  shift
+  JOURNAL=$1
+  shift
+
+fi
 
 if [ "$1" = "-e" ]; then
 
@@ -41,8 +53,8 @@ elif [ "$1" = "" ]; then
   if [ "$new" = "$date" ]; then
     echo "File unchanged, not adding to journal"
   else
-    echo "Adding to journal."
-    addtext $(cat /tmp/jn)
+    echo "Adding to journal $JOURNAL."
+    addtext "$(cat /tmp/jn)"
   fi
 
 else
@@ -51,3 +63,4 @@ else
   addtext "$date$*"
 
 fi
+
