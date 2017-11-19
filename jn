@@ -4,7 +4,7 @@
 # License GPLv3
 
 JOURNAL=~/journal.txt
-EXPORT=/tmp/jn.md
+EXPORT=/tmp/jn.html
 MARKDOWN_VIEWER=firefox
 
 addtext() {
@@ -32,9 +32,9 @@ if [ "$1" = "-e" ]; then
 elif [ "$1" = "-v" ]; then
 
   # Add first heading
-  echo "# Journal (Markdown Export at $EXPORT)" > $EXPORT
+  echo "# Journal (Markdown Export at $EXPORT)" | markdown > $EXPORT
   # Make dates headings
-  sjournal=$(sed $JOURNAL -e "s/^\([[:digit:]]\{4\}-\)/## \1/g" >> $EXPORT)
+  sjournal=$(sed $JOURNAL -e "s/^\([[:digit:]]\{4\}-\)/## \1/g" | markdown >> $EXPORT)
   # Make all single lines separate
   # sed -i -e "s/\(\w\)$/\1  /g" $EXPORT
   # Make all jn entries in <pre>
