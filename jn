@@ -38,7 +38,7 @@ elif [ "$1" = "-v" ]; then
   # Make all single lines separate
   # sed -i -e "s/\(\w\)$/\1  /g" $EXPORT
   # Make all jn entries in <pre>
-  sed -i -e "s/^\([^#]\)/    \1/g" $EXPORT
+  # sed -i -e "s/^\([^#]\)/    \1/g" $EXPORT
   # Open it in FF (or whatever)
   $MARKDOWN_VIEWER $EXPORT
 
