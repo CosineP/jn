@@ -46,9 +46,21 @@ elif [ "$1" = "" ]; then
 
   echo "$date" > /tmp/jn
   # The user edits the jn entry in their editor
-  # These are vim-only commands to start at the end, in insert mode
-  $EDITOR -c 'startinsert' + /tmp/jn
-  new="$(cat /tmp/jn)\n"
+  case "$EDITOR" in
+    *vi*)
+      # These are vim-only commands to start at the end, in insert mode
+      full_editor="$EDITOR -c 'startinsert' +"
+      ;;
+    kak)
+      # In kakoune, the commands are a little different
+      full_editor="$EDITOR -e 'execute-keys gji'"
+      ;;
+    *)
+      full_editor="$EDITOR"
+      ;;
+  esac
+  eval $full_editor /tmp/jn
+  new="$(cat /tmp/jn)"
 
   if [ "$new" = "$date" ]; then
     echo "File unchanged, not adding to journal"
