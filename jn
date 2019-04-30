@@ -13,7 +13,7 @@ addtext() {
 }
 
 # This is the One True Date Format
-date="$(date +"%F %-l:%M%P")\n"
+date="$(date +"%F %-l:%M%P")"
 
 if [ "$1" = "-j" ]; then
 
@@ -32,9 +32,9 @@ if [ "$1" = "-e" ]; then
 elif [ "$1" = "-v" ]; then
 
   # Add first heading
-  echo "# Journal (Markdown Export at $EXPORT)" | markdown > $EXPORT
+  echo "# Journal (Markdown Export at $date)" | markdown > $EXPORT
   # Make dates headings
-  sjournal=$(sed $JOURNAL -e "s/^\([[:digit:]]\{4\}-\)/## \1/g" | markdown >> $EXPORT)
+  sed $JOURNAL -e "s/^\([[:digit:]]\{4\}-\)/## \1/g" | markdown >> $EXPORT
   # Make all single lines separate
   # sed -i -e "s/\(\w\)$/\1  /g" $EXPORT
   # Make all jn entries in <pre>
@@ -44,7 +44,7 @@ elif [ "$1" = "-v" ]; then
 
 elif [ "$1" = "" ]; then
 
-  echo "$date" > /tmp/jn
+  echo "$date\n" > /tmp/jn
   # The user edits the jn entry in their editor
   case "$EDITOR" in
     *vi*)
@@ -72,7 +72,7 @@ elif [ "$1" = "" ]; then
 else
 
   # You can specify exactly what to add to jn in a one-liner by just adding it
-  addtext "$date$*"
+  addtext "$date\n$*"
 
 fi
 
