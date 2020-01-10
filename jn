@@ -19,6 +19,43 @@ gooddate() {
 
 date=$(gooddate)
 
+if [ "$1" = "--help" ] || [ "$1" = "-h" ]; then
+
+  echo "
+jn - add things to a journal in the comfort of your shell and/or favorite editor
+
+jn
+    open your EDITOR with the date pre-entered. if supported editor, will enter
+    insert mode at the end of the file automatically. saving and quitting
+    adds to journal verbatim
+
+    exiting without typing anything (leaving date) will cause nothing to be added
+
+jn <journal message>
+    add journal message to journal, prepended by the date
+
+jn [-d] <file>
+    add file contents to journal with last modified date
+    -d	delete the file afterwards
+
+jn -e
+    open complete journal in your editor. if supported editor, will enter
+    normal mode at end of file
+
+jn -v
+    render journal as markdown and immediately open it in firefox. changing
+    browser requires changing MARKDOWN_VIEWER in firefox
+
+any command can also use the following options:
+    -j <journal>	add to journal file at path given by journal
+
+the date format is always YYYY-MM-DD hh:MM(am/pm), because that's simply the best one
+"
+
+  exit 0
+
+fi
+
 if [ "$1" = "-j" ]; then
 
   # Specify a journal file
