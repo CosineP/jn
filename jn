@@ -12,8 +12,12 @@ addtext() {
   echo "$1\n" >> $JOURNAL
 }
 
-# This is the One True Date Format
-date="$(date +"%F %-l:%M%P")"
+gooddate() {
+  # This is the One True Date Format
+  date +"%F %-l:%M%P" "$@"
+}
+
+date=$(gooddate)
 
 if [ "$1" = "-j" ]; then
 
@@ -21,6 +25,16 @@ if [ "$1" = "-j" ]; then
   shift
   JOURNAL=$1
   shift
+
+fi
+
+deletesrc=
+
+if [ "$1" = "-d" ]; then
+
+  # Next arg should be a file, we'll delete it after adding to journal
+  shift
+  deletesrc=1
 
 fi
 
@@ -67,6 +81,18 @@ elif [ "$1" = "" ]; then
   else
     echo "Adding to journal $JOURNAL."
     addtext "$(cat /tmp/jn)"
+  fi
+
+elif test -e $1; then
+
+  # File last modified (=~written date?) will be our date
+  date=`gooddate -r $1`
+  # File content is content
+  content=`cat $1`
+  addtext "$date\n$content"
+
+  if [ $deletesrc ]; then
+    rm $1
   fi
 
 else
